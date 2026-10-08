@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
-<title>Usap Tayo – Filipino Tutor</title>
+<title>Usap Tayo – Learn Filipino</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Practice speaking Filipino out loud with a friendly AI tutor.">
+<meta name="description" content="Learn Filipino by talking out loud with Mara, your friendly AI tutor.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,603 +15,137 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="format-detection" content="telephone=no">
-<style>
-:root{
- --blue:#0b3a8c;--blue2:#1d4fa8;--red:#c8102e;--sun:#f2b705;--sun-soft:#fff4cc;
- --bg:#fbf7ef;--panel:#ffffff;--panel2:#f3eee4;--text:#1d2533;--muted:#5d6676;--border:#e6dfd2;
- --tutor:#ffffff;--me:#0b3a8c;--me-ink:#fff;--good:#1f7a4a;--good-soft:#e3f3ea;--fix:#9a5b00;--fix-soft:#fff3dc;--bad:#b3261e;--bad-soft:#fde7e5;
- --shadow:0 1px 2px rgba(20,30,50,.06),0 6px 20px rgba(20,30,50,.07);
- --sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);--sal:env(safe-area-inset-left,0px);--sar:env(safe-area-inset-right,0px);
-}
-@media (prefers-color-scheme:dark){:root{
- --bg:#10151f;--panel:#19202d;--panel2:#222b3a;--text:#eef1f6;--muted:#a3adbd;--border:#2c3647;
- --tutor:#1d2533;--me:#2f63c4;--good:#6fd29b;--good-soft:#173527;--fix:#f2c46b;--fix-soft:#3a2f17;--bad:#ff8a80;--bad-soft:#3d1d1b;--sun-soft:#3a3214;
- --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);}}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:17px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
-body{overflow:hidden;overscroll-behavior:none}
-button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
-input,select,textarea{font:inherit;color:inherit}
-#app{position:fixed;inset:0;display:flex;flex-direction:column}
-header{flex:none;padding:calc(var(--sat) + 8px) calc(var(--sar) + 12px) 10px calc(var(--sal) + 12px);background:var(--blue);color:#fff;display:flex;align-items:center;gap:8px;box-shadow:0 2px 10px rgba(0,0,0,.15);z-index:2}
-header .brand{display:flex;flex-direction:column;flex:1;min-width:0}
-header .brand b{font-size:19px;letter-spacing:.2px}
-#topicBtn{display:inline-flex;align-items:center;gap:4px;font-size:14px;opacity:.92;padding:2px 0;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;color:#fff}
-#topicBtn span{overflow:hidden;text-overflow:ellipsis}
-.hbtn{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.12)}
-.hbtn:active{background:rgba(255,255,255,.25)}
-.hbtn svg{width:24px;height:24px}
-#chat{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px calc(var(--sar) + 12px) 18px calc(var(--sal) + 12px);display:flex;flex-direction:column;gap:12px}
-.msg{max-width:88%;display:flex;flex-direction:column;gap:6px;animation:pop .18s ease-out}
-@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.msg.me{align-self:flex-end;align-items:flex-end}
-.msg.tutor{align-self:flex-start}
-.bubble{padding:11px 14px;border-radius:20px;box-shadow:var(--shadow)}
-.me .bubble{background:var(--me);color:var(--me-ink);border-bottom-right-radius:6px}
-.tutor .bubble{background:var(--tutor);border:1px solid var(--border);border-bottom-left-radius:6px}
-.tl{font-size:20px;line-height:1.35;font-weight:560}
-.en{color:var(--muted);font-size:15.5px;margin-top:4px;font-style:italic}
-.en.hidden{display:none}
-.reveal{font-size:14px;color:var(--blue2);margin-top:4px;text-decoration:underline;padding:4px 0}
-@media (prefers-color-scheme:dark){.reveal{color:#8fb3ff}}
-.actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.act{min-height:40px;min-width:44px;padding:0 12px;border-radius:12px;background:var(--panel2);display:inline-flex;align-items:center;gap:6px;font-size:15px}
-.act:active{filter:brightness(.92)}
-.act svg{width:19px;height:19px}
-.act.saved{background:var(--sun-soft);color:var(--fix)}
-.words{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.word{border:1px solid var(--border);border-radius:999px;padding:6px 11px;font-size:14.5px;background:var(--panel)}
-.word b{font-weight:650}
-.fix{background:var(--fix-soft);border:1px solid color-mix(in srgb,var(--fix) 30%,transparent);border-radius:16px;padding:10px 12px;max-width:100%;color:var(--text);box-shadow:var(--shadow)}
-.fix .lbl{font-size:13px;font-weight:700;color:var(--fix);text-transform:uppercase;letter-spacing:.5px}
-.fix .better{font-size:18px;font-weight:600;margin:3px 0}
-.fix .why{font-size:15px;color:var(--muted)}
-.fix.ok{background:var(--good-soft);border-color:transparent}
-.fix.ok .lbl{color:var(--good)}
-.sys{align-self:center;font-size:14px;color:var(--muted);text-align:center;max-width:90%}
-.err{align-self:stretch;background:var(--bad-soft);color:var(--bad);border-radius:16px;padding:12px 14px;font-size:15.5px}
-.err button{margin-top:8px;background:var(--bad);color:#fff;border-radius:12px;padding:10px 16px;font-weight:600}
-.err button.ghost{background:transparent;color:var(--bad);border:1px solid var(--bad);margin-left:8px}
-.typing{display:inline-flex;gap:5px;padding:14px 16px}
-.typing i{width:8px;height:8px;border-radius:50%;background:var(--muted);opacity:.5;animation:bl 1s infinite}
-.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
-@keyframes bl{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:.9;transform:translateY(-3px)}}
-/* welcome */
-.welcome{background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:18px;box-shadow:var(--shadow)}
-.welcome h2{margin:0 0 6px;font-size:23px}
-.welcome p{margin:6px 0;color:var(--muted)}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.chip{min-height:44px;padding:8px 14px;border-radius:14px;background:var(--panel2);font-size:15.5px;text-align:left;border:1px solid var(--border)}
-.chip:active{filter:brightness(.93)}
-.chip.primary{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600}
-/* dock */
-#dock{flex:none;background:var(--panel);border-top:1px solid var(--border);padding:8px calc(var(--sar) + 12px) calc(var(--sab) + 10px) calc(var(--sal) + 12px);z-index:2}
-#sugs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
-#sugs::-webkit-scrollbar{display:none}
-#sugs:empty{display:none}
-.sug{flex:none;max-width:78%;text-align:left;border-radius:14px;padding:8px 12px;background:var(--sun-soft);border:1px solid color-mix(in srgb,var(--sun) 40%,transparent);min-height:44px}
-.sug .s1{font-weight:600;font-size:15.5px;display:flex;gap:6px;align-items:center}
-.sug .s1 svg{width:16px;height:16px;flex:none;opacity:.7}
-.sug .s2{font-size:13.5px;color:var(--muted)}
-.sugl{font-size:12.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin:0 0 4px 2px}
-#status{text-align:center;font-size:15px;color:var(--muted);min-height:21px;margin-bottom:6px}
-#status.live{color:var(--red);font-weight:600}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.side{width:84px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;color:var(--muted)}
-.sidebtn{width:54px;height:54px;border-radius:18px;background:var(--panel2);display:grid;place-items:center;border:1px solid var(--border)}
-.sidebtn svg{width:25px;height:25px}
-.sidebtn.on{background:var(--good);color:#fff;border-color:var(--good)}
-#mic{position:relative;width:96px;height:96px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;box-shadow:0 6px 20px rgba(200,16,46,.35);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:transform .12s}
-#mic svg{width:42px;height:42px;pointer-events:none}
-#mic:active{transform:scale(.96)}
-#mic.rec{background:#e0263f;transform:scale(1.06)}
-#mic.busy{background:var(--blue2);box-shadow:0 6px 20px rgba(11,58,140,.35)}
-#mic.speaking{background:var(--blue)}
-#ring{position:absolute;inset:-10px;border-radius:50%;border:4px solid var(--red);opacity:0;pointer-events:none;transition:transform .08s,opacity .2s}
-#mic.rec #ring{opacity:.55}
-.spin{width:38px;height:38px;border-radius:50%;border:4px solid rgba(255,255,255,.35);border-top-color:#fff;animation:sp .8s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
-#typeRow{display:none;gap:8px;margin-top:10px}
-#typeRow.open{display:flex}
-#typeIn{flex:1;min-height:48px;border-radius:14px;border:1px solid var(--border);background:var(--bg);padding:10px 12px;font-size:17px}
-#typeSend{min-width:64px;border-radius:14px;background:var(--blue);color:#fff;font-weight:600}
-/* sheets */
-.sheet{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;background:var(--bg)}
-.sheet.open{display:flex;animation:up .2s ease-out}
-@keyframes up{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
-.sheet header{background:var(--panel);color:var(--text);box-shadow:none;border-bottom:1px solid var(--border)}
-.sheet header h3{flex:1;margin:0;font-size:19px}
-.sheet .hbtn{color:var(--text);background:var(--panel2)}
-.sheet .body{flex:1;overflow-y:auto;padding:16px calc(var(--sar) + 16px) calc(var(--sab) + 28px) calc(var(--sal) + 16px)}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:14px 16px;margin-bottom:14px}
-.card h4{margin:0 0 8px;font-size:16px}
-.hint{font-size:14px;color:var(--muted);margin:6px 0 0}
-.hint a{color:var(--blue2)}
-.field{display:flex;gap:8px}
-.field input{flex:1;min-width:0}
-input[type=password],input[type=text],select,textarea{width:100%;min-height:48px;border-radius:12px;border:1px solid var(--border);background:var(--bg);padding:10px 12px;font-size:16px}
-textarea{min-height:84px;resize:vertical}
-.btn{min-height:48px;padding:0 16px;white-space:nowrap;border-radius:12px;background:var(--panel2);border:1px solid var(--border);font-weight:600}
-.btn.blue{background:var(--blue);color:#fff;border-color:var(--blue)}
-.btn.danger{color:var(--bad);border-color:var(--bad);background:transparent}
-.btn.wide{width:100%}
-.seg{display:flex;background:var(--panel2);border-radius:14px;padding:4px;gap:4px}
-.seg button{flex:1;min-height:44px;border-radius:11px;font-size:15.5px;color:var(--muted)}
-.seg button.on{background:var(--panel);color:var(--text);font-weight:650;box-shadow:var(--shadow)}
-.sw{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px}
-.sw+.sw{border-top:1px solid var(--border)}
-.sw small{display:block;color:var(--muted);font-size:13.5px}
-.tog{position:relative;width:56px;height:34px;flex:none;border-radius:999px;background:var(--border);transition:background .15s}
-.tog::after{content:"";position:absolute;top:3px;left:3px;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .15s}
-.tog.on{background:var(--good)}
-.tog.on::after{transform:translateX(22px)}
-.keystate{font-size:14px;margin-top:8px;min-height:20px}
-.keystate.good{color:var(--good)}.keystate.bad{color:var(--bad)}
-.topic{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:14px;margin-bottom:10px;min-height:64px}
-.topic .em{font-size:28px;width:40px;text-align:center}
-.topic b{display:block;font-size:17px}
-.topic small{color:var(--muted);font-size:14px}
-.topic.on{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue) inset}
-.phrase{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:12px;margin-bottom:10px}
-.phrase .txt{flex:1;min-width:0}
-.phrase .txt b{display:block;font-size:18px}
-.phrase .txt span{color:var(--muted);font-size:14.5px}
-.round{width:48px;height:48px;border-radius:14px;background:var(--panel2);display:grid;place-items:center;flex:none}
-.round svg{width:22px;height:22px}
-.empty{color:var(--muted);text-align:center;padding:30px 10px}
-#toast{position:fixed;left:50%;bottom:calc(var(--sab) + 180px);transform:translateX(-50%);background:rgba(20,25,35,.92);color:#fff;padding:11px 16px;border-radius:14px;font-size:15px;max-width:88vw;text-align:center;z-index:20;opacity:0;pointer-events:none;transition:opacity .2s}
-#toast.show{opacity:1}
-.ver{text-align:center;color:var(--muted);font-size:12.5px;margin-top:8px}
-</style>
+<link rel="stylesheet" href="app.css">
 </head>
 <body>
 <div id="app">
- <header>
-  <div class="brand"><b>Usap Tayo 🇵🇭</b>
-   <button id="topicBtn" aria-label="Change topic"><span id="topicName">Free conversation</span> ▾</button></div>
-  <button class="hbtn" id="phrasesBtn" aria-label="Saved phrases"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg></button>
-  <button class="hbtn" id="settingsBtn" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
- </header>
- <main id="chat" aria-live="polite"></main>
- <div id="dock">
-  <div id="sugWrap"><div class="sugl" id="sugLabel" hidden>Try saying · tap to hear it</div><div id="sugs"></div></div>
-  <div id="status">Tap the mic to talk</div>
-  <div class="row">
-   <div class="side"><button class="sidebtn" id="kbBtn" aria-label="Type instead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M6.5 10h.01M10 10h.01M14 10h.01M17.5 10h.01M7 14h10"/></svg></button>Type</div>
-   <button id="mic" aria-label="Talk"><span id="ring"></span><span id="micIcon"></span></button>
-   <div class="side"><button class="sidebtn" id="hfBtn" aria-label="Hands-free mode" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 0 1 18 0v4a3 3 0 0 1-3 3h-1v-7h4M3 12v4a3 3 0 0 0 3 3h1v-7H3"/></svg></button><span id="hfLbl">Hands-free</span></div>
-  </div>
-  <div id="typeRow"><input id="typeIn" type="text" placeholder="Type in Filipino or English…" enterkeyhint="send" autocomplete="off" autocorrect="off"><button id="typeSend">Send</button></div>
+ <div id="screens">
+  <!-- HOME -->
+  <section class="screen" id="scr-home" data-tab="home">
+   <header class="topbar">
+    <div class="brand"><span class="mini-mascot" data-mascot="happy"></span><b>Usap Tayo</b></div>
+    <div class="chips-top"><span class="pill" id="hStreak" title="Day streak">🔥 0</span><span class="pill" id="hXp" title="XP today">⚡ 0</span></div>
+    <button class="hbtn" data-open-settings aria-label="Settings"></button>
+   </header>
+   <div class="sbody" id="homeBody"></div>
+  </section>
+  <!-- LEARN -->
+  <section class="screen" id="scr-learn" data-tab="learn">
+   <header class="topbar"><div class="title"><b>Learning path</b><small id="learnSub">0 of 0 lessons</small></div><span class="pill" id="lStreak">🔥 0</span></header>
+   <div class="sbody" id="learnBody"></div>
+  </section>
+  <!-- TALK -->
+  <section class="screen" id="scr-talk" data-tab="talk">
+   <header class="topbar">
+    <div class="title"><b>Talk with Mara</b><button id="topicBtn" aria-label="Change topic"><span id="topicName">Free conversation</span> ▾</button></div>
+    <button class="hbtn" id="phrasesBtn" aria-label="Saved phrases"></button>
+    <button class="hbtn" data-open-settings aria-label="Settings"></button>
+   </header>
+   <div class="convHost" id="talkHost">
+    <div id="conv">
+     <main id="chat" aria-live="polite"></main>
+     <div id="dock">
+      <div id="sugWrap"><div class="sugl" id="sugLabel" hidden>Try saying · tap to hear it</div><div id="sugs"></div></div>
+      <div id="status">Tap the mic to talk</div>
+      <div class="row">
+       <div class="side"><button class="sidebtn" id="kbBtn" aria-label="Type instead"></button>Type</div>
+       <button id="mic" class="micbtn" aria-label="Talk"><span class="ring"></span><span class="micIcon"></span></button>
+       <div class="side"><button class="sidebtn" id="hfBtn" aria-label="Hands-free mode" aria-pressed="false"></button><span id="hfLbl">Hands-free</span></div>
+      </div>
+      <div id="typeRow"><input id="typeIn" type="text" placeholder="Type in Filipino or English…" enterkeyhint="send" autocomplete="off" autocorrect="off"><button id="typeSend">Send</button></div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- REVIEW -->
+  <section class="screen" id="scr-review" data-tab="review">
+   <header class="topbar"><div class="title"><b>Review</b><small id="reviewSub">Practice with spaced repetition</small></div><span class="pill" id="rDue">0 due</span></header>
+   <div class="sbody" id="reviewBody"></div>
+  </section>
+  <!-- PROGRESS -->
+  <section class="screen" id="scr-progress" data-tab="progress">
+   <header class="topbar"><div class="title"><b>Your progress</b><small id="progSub">Level 1</small></div><button class="hbtn" data-open-settings aria-label="Settings"></button></header>
+   <div class="sbody" id="progressBody"></div>
+  </section>
  </div>
+ <nav id="tabs" aria-label="Main">
+  <button data-go="home"><i data-ico="home"></i><span>Home</span></button>
+  <button data-go="learn"><i data-ico="learn"></i><span>Learn</span></button>
+  <button data-go="talk" class="talktab"><i data-ico="micfill"></i><span>Talk</span></button>
+  <button data-go="review"><i data-ico="review"></i><span>Review</span><em id="tabDue" hidden>0</em></button>
+  <button data-go="progress"><i data-ico="chart"></i><span>Progress</span></button>
+ </nav>
 </div>
 
+<!-- LESSON -->
+<section class="sheet" id="lessonView" aria-label="Lesson">
+ <header class="lbar">
+  <button class="xbtn" id="lessonClose" aria-label="Quit lesson"></button>
+  <div class="lprog"><div class="lprog-fill" id="lessonProg"></div></div>
+  <span class="lturns" id="lessonTurns"></span>
+ </header>
+ <div class="lbody" id="lessonIntro"></div>
+ <div class="convHost" id="lessonHost"></div>
+ <div class="lfoot" id="lessonFoot" hidden><button class="b3 green wide" id="finishBtn" disabled>Finish lesson</button></div>
+ <div class="lbody" id="lessonResults"></div>
+</section>
+
+<!-- SETTINGS -->
 <section class="sheet" id="settingsSheet" aria-label="Settings">
- <header><h3>Settings</h3><button class="hbtn" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
+ <header class="topbar"><div class="title"><b>Settings</b></div><button class="hbtn" data-close aria-label="Close"></button></header>
  <div class="body">
-  <div class="card" id="welcomeCard" hidden><h4>Mabuhay! 👋</h4><p class="hint" style="margin:0">To start talking with your tutor, paste your OpenAI API key below. It stays only on this phone and is sent only to OpenAI.</p></div>
+  <div class="card" id="welcomeCard" hidden><h4>Mabuhay! 👋</h4><p class="hint" style="margin:0">To talk with Mara, paste your OpenAI API key below. It stays only on this phone and is sent only to OpenAI. You can browse lessons without it.</p></div>
   <div class="card">
    <h4>OpenAI API key</h4>
-   <div class="field"><input id="keyIn" type="password" placeholder="sk-..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn" id="keyShow" aria-label="Show key">Show</button></div>
-   <div style="display:flex;gap:8px;margin-top:10px"><button class="btn blue" id="keySave" style="flex:1">Save &amp; test key</button></div>
+   <div class="field"><input id="keyIn" type="password" placeholder="sk-..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"><button class="btn" id="keyShow">Show</button></div>
+   <button class="b3 blue wide" id="keySave" style="margin-top:10px">Save &amp; test key</button>
    <div class="keystate" id="keyState"></div>
-   <p class="hint">Get one at <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com/api-keys</a> (needs a little prepaid credit). Stored only in this phone's browser storage.</p>
+   <p class="hint">Get one at <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com/api-keys</a> (needs a little prepaid credit). Stored only in this phone’s browser storage.</p>
   </div>
+  <div class="card"><h4>Daily goal</h4><div class="seg" id="goalSeg"><button data-v="casual">Casual<small>30 XP</small></button><button data-v="regular">Regular<small>60 XP</small></button><button data-v="serious">Serious<small>100 XP</small></button></div></div>
   <div class="card"><h4>Your level</h4><div class="seg" id="levelSeg"><button data-v="beginner">Beginner</button><button data-v="intermediate">Intermediate</button></div></div>
-  <div class="card"><h4>Tutor speaking speed</h4><div class="seg" id="speedSeg"><button data-v="slow">Slow</button><button data-v="normal">Medium</button><button data-v="natural">Natural</button></div></div>
+  <div class="card"><h4>Mara’s speaking speed</h4><div class="seg" id="speedSeg"><button data-v="slow">Slow</button><button data-v="normal">Medium</button><button data-v="natural">Natural</button></div></div>
   <div class="card">
    <div class="sw"><div>Show English translations<small>Off = tap a line to peek</small></div><button class="tog" id="tEn" role="switch"></button></div>
-   <div class="sw"><div>Say corrections out loud<small>Tutor first says the better way</small></div><button class="tog" id="tFix" role="switch"></button></div>
-   <div class="sw"><div>Say English translation too<small>Tutor reads the English after Filipino</small></div><button class="tog" id="tSayEn" role="switch"></button></div>
+   <div class="sw"><div>Say corrections out loud<small>Mara first says the better way</small></div><button class="tog" id="tFix" role="switch"></button></div>
+   <div class="sw"><div>Say English translation too<small>Mara reads the English after Filipino</small></div><button class="tog" id="tSayEn" role="switch"></button></div>
   </div>
-  <div class="card"><h4>Tutor voice</h4>
-   <div class="field"><select id="voiceSel"></select><button class="btn" id="voiceTest">▶ Test</button></div>
-  </div>
+  <div class="card"><h4>Mara’s voice</h4><div class="field"><select id="voiceSel"></select><button class="btn" id="voiceTest">▶ Test</button></div></div>
   <div class="card"><h4>About me (optional)</h4>
-   <textarea id="aboutIn" placeholder="e.g. My girlfriend's family is from Cebu. I sell houses in Ohio. I want to talk with her Lola."></textarea>
-   <p class="hint">The tutor uses this to make conversations personal.</p></div>
+   <textarea id="aboutIn" placeholder="e.g. I sell houses in Ohio. I want to talk with my girlfriend’s family."></textarea>
+   <p class="hint">Mara uses this to make conversations personal.</p></div>
+  <div class="card"><h4>Backup</h4>
+   <p class="hint" style="margin:0 0 10px">Save your streak, XP, lessons, phrases and review deck to a file (your API key is not included).</p>
+   <div style="display:flex;gap:8px"><button class="btn" id="exportBtn" style="flex:1">⬇️ Export</button><button class="btn" id="importBtn" style="flex:1">⬆️ Import</button></div>
+   <input type="file" id="importFile" accept="application/json,.json" hidden>
+  </div>
   <div class="card"><h4>Advanced</h4>
-   <label class="hint" for="chatSel">Tutor brain (chat model)</label><select id="chatSel" style="margin:4px 0 10px">
+   <label class="hint" for="chatSel">Mara’s brain (chat model)</label><select id="chatSel" style="margin:4px 0 10px">
     <option value="gpt-4.1-mini">gpt-4.1-mini (recommended)</option><option value="gpt-4.1">gpt-4.1 (smarter, ~5× cost)</option><option value="gpt-4o-mini">gpt-4o-mini (cheapest)</option></select>
    <label class="hint" for="sttSel">Speech recognition</label><select id="sttSel" style="margin-top:4px">
     <option value="gpt-4o-transcribe">gpt-4o-transcribe (best for Taglish)</option><option value="gpt-4o-mini-transcribe">gpt-4o-mini-transcribe (cheaper)</option><option value="whisper-1">whisper-1</option></select>
   </div>
-  <button class="btn danger wide" id="resetBtn">Start a new conversation</button>
-  <div class="ver">Usap Tayo · build 202610081229</div>
+  <button class="btn danger wide" id="resetBtn">Start a new free-talk conversation</button>
+  <div class="ver">Usap Tayo · build 202610081303</div>
  </div>
 </section>
 
 <section class="sheet" id="topicSheet" aria-label="Topics">
- <header><h3>Pick a topic</h3><button class="hbtn" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
- <div class="body"><p class="hint" style="margin:0 0 12px">Picking a topic starts a fresh conversation. The tutor will speak first.</p><div id="topicList"></div></div>
+ <header class="topbar"><div class="title"><b>Pick a topic</b></div><button class="hbtn" data-close aria-label="Close"></button></header>
+ <div class="body"><p class="hint" style="margin:0 0 12px">Picking a topic starts a fresh free-talk conversation. Mara speaks first.</p><div id="topicList"></div></div>
 </section>
 
 <section class="sheet" id="phraseSheet" aria-label="Saved phrases">
- <header><h3>Phrases I learned</h3><button class="hbtn" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
+ <header class="topbar"><div class="title"><b>Phrases I learned</b></div><button class="hbtn" data-close aria-label="Close"></button></header>
  <div class="body" id="phraseList"></div>
 </section>
 
+<div id="modal" hidden><div class="mcard" id="modalCard"></div></div>
+<canvas id="confetti"></canvas>
 <div id="toast" role="status"></div>
 <audio id="player" playsinline preload="auto"></audio>
-
-<script>
-'use strict';
-const BUILD='202610081229';
-const API='https://api.openai.com/v1';
-const TTS_MODEL='gpt-4o-mini-tts';
-const MAX_MSGS=40; // ~20 turns of context
-const $=s=>document.querySelector(s);
-function h(tag,attrs,...kids){const e=document.createElement(tag);if(attrs)for(const[k,v]of Object.entries(attrs)){if(k==='class')e.className=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else if(k==='html')e.innerHTML=v;else if(v!==false&&v!=null)e.setAttribute(k,v===true?'':v);}for(const k of kids.flat()){if(k==null||k===false)continue;e.append(k.nodeType?k:document.createTextNode(String(k)));}return e;}
-const ICON={
- mic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="2.5" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3.5"/></svg>',
- stop:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="6.5" width="11" height="11" rx="2.5"/></svg>',
- speaker:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>',
- star:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>',
- starFull:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>',
- trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13"/></svg>'
-};
-function svg(name){const s=document.createElement('span');s.innerHTML=ICON[name];return s.firstChild;}
-
-/* ---------- storage ---------- */
-const DEFAULTS={key:'',level:'beginner',speed:'slow',showEn:true,speakFix:true,sayEn:false,voice:'coral',about:'',chatModel:'gpt-4.1-mini',sttModel:'gpt-4o-transcribe',handsFree:false};
-function load(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v;}catch(e){return d;}}
-function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-const S=Object.assign({},DEFAULTS,load('ut.settings',{}));
-function saveS(){save('ut.settings',S);}
-let phrases=load('ut.phrases',[]);
-let convo=load('ut.convo',null)||{topic:'free',history:[],items:[]};
-
-/* ---------- topics ---------- */
-const TOPICS=[
- {id:'free',em:'💬',name:'Free conversation',desc:'Chat about anything — your day, work, plans',brief:'Free conversation. Ask Neal about his day, work, plans and interests. Keep it light and personal.'},
- {id:'greet',em:'👋',name:'Greetings & introductions',desc:'Kumusta, name, where you’re from, work',brief:'Role-play meeting someone new at a Filipino party. Practice greetings (Kumusta, Magandang umaga/hapon/gabi), asking and giving names (Ano ang pangalan mo?), where you are from, and what you do for work.'},
- {id:'food',em:'🍲',name:'Ordering food',desc:'Carinderia / restaurant — order, ask, pay',brief:'Role-play: you are a friendly server at a Filipino restaurant (carinderia). Help Neal order dishes (adobo, sinigang, pancit, lechon, halo-halo), ask about spiciness, drinks, and paying the bill (Magkano po? Bill po).'},
- {id:'family',em:'👵',name:'Meeting her family',desc:'Polite talk with Tita, Tito & Lola (po/opo)',brief:'Role-play: you are the Tita (aunt) of Neal’s Filipino girlfriend, meeting him at a family gathering with Lola nearby. Teach respectful speech: po and opo, mano po, polite questions about family, food (Kain na!), and compliments. Be warm and a little teasing like a real Tita.'},
- {id:'directions',em:'🧭',name:'Asking directions',desc:'Left/right, jeepney, tricycle, how far',brief:'Role-play: Neal is lost in a Philippine town and asks you (a local) for directions. Practice: Saan ang...?, kaliwa/kanan, diretso, malapit/malayo, sakay ng jeep/tricycle, magkano ang pamasahe.'},
- {id:'shop',em:'🛍️',name:'Shopping & haggling',desc:'Palengke — prices, numbers, tawad',brief:'Role-play: you are a vendor at a palengke (market). Neal shops for fruit, a shirt, or souvenirs. Practice numbers and prices (Magkano ito?), asking for a discount (Pwede pong tawad?), sizes and colors, and politely declining.'},
- {id:'small',em:'☀️',name:'Small talk',desc:'Weather, weekend, food, hobbies, family',brief:'Casual small talk like with a new friend: weather (mainit, umuulan), weekend plans, favorite food, hobbies, family. Ask easy follow-up questions.'},
- {id:'work',em:'🏡',name:'Talking about my work',desc:'Explain real estate in Filipino',brief:'Neal is a real estate agent in Ohio. Have a friendly chat where he explains his job in Filipino: bahay (house), bumili/magbenta (buy/sell), kliyente, presyo, kuwarto (rooms), and his workday.'}
-];
-const topicById=id=>TOPICS.find(t=>t.id===id)||TOPICS[0];
-
-/* ---------- UI helpers ---------- */
-const chat=$('#chat'),mic=$('#mic'),statusEl=$('#status'),player=$('#player');
-let toastT;function toast(msg,ms=2600){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),ms);}
-function scrollDown(){requestAnimationFrame(()=>{chat.scrollTop=chat.scrollHeight;});}
-function openSheet(id){document.querySelectorAll('.sheet.open').forEach(s=>s.classList.remove('open'));$(id).classList.add('open');}
-function closeSheets(){document.querySelectorAll('.sheet.open').forEach(s=>s.classList.remove('open'));}
-document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>{closeSheets();if(!S.key)openSettings();}));
-
-/* ---------- state ---------- */
-let state='idle'; // idle | recording | transcribing | thinking | speaking
-function setState(s,msg){state=s;mic.classList.toggle('rec',s==='recording');mic.classList.toggle('busy',s==='transcribing'||s==='thinking');mic.classList.toggle('speaking',s==='speaking');
- statusEl.classList.toggle('live',s==='recording');
- const icon=$('#micIcon');icon.innerHTML='';
- if(s==='recording')icon.append(svg('stop'));else if(s==='transcribing'||s==='thinking')icon.append(h('div',{class:'spin'}));else icon.append(svg('mic'));
- mic.setAttribute('aria-label',s==='recording'?'Stop and send':'Talk');
- statusEl.textContent=msg!=null?msg:({idle:S.handsFree?'Hands-free on · tap the mic to start':'Tap the mic to talk (or hold it)',recording:S.handsFree?'Listening… just talk, I’ll send when you pause':'Listening… tap again to send',transcribing:'Got it — transcribing…',thinking:'Tutor is thinking…',speaking:'Tutor is speaking · tap mic to interrupt'})[s];
- document.body.dataset.state=s;
-}
-
-/* ---------- errors ---------- */
-class AppError extends Error{constructor(msg,kind){super(msg);this.kind=kind;}}
-async function apiErr(res){let body={};try{body=await res.json();}catch(e){}
- const m=(body.error&&body.error.message)||'';const code=(body.error&&body.error.code)||'';
- if(res.status===401)return new AppError('Your OpenAI API key was rejected. Open Settings and paste a valid key.','key');
- if(res.status===429&&(code==='insufficient_quota'||/quota|billing/i.test(m)))return new AppError('Your OpenAI account is out of credit. Add a few dollars at platform.openai.com → Billing, then try again.','quota');
- if(res.status===429)return new AppError('OpenAI says too many requests right now. Wait a few seconds and try again.','rate');
- if(res.status===404||/model/i.test(m)&&res.status===400)return new AppError('OpenAI couldn’t use that model'+(m?': '+m:'.')+' Try another model in Settings → Advanced.','model');
- if(res.status>=500)return new AppError('OpenAI is having trouble right now ('+res.status+'). Try again in a moment.','server');
- return new AppError('OpenAI error ('+res.status+'): '+(m||'unknown problem'),'other');}
-async function api(path,opts){if(!S.key)throw new AppError('Add your OpenAI API key in Settings first.','key');
- let res;try{res=await fetch(API+path,Object.assign({},opts,{headers:Object.assign({Authorization:'Bearer '+S.key},opts.headers||{})}));}
- catch(e){throw new AppError(navigator.onLine===false?'You’re offline. Check your internet connection and try again.':'Couldn’t reach OpenAI (network problem). Check your connection and try again.','network');}
- if(!res.ok)throw await apiErr(res);return res;}
-
-/* ---------- audio unlock / playback ---------- */
-const SILENT='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
-let actx=null,unlocked=false;
-function unlockAudio(){
- if(!actx){try{const AC=window.AudioContext||window.webkitAudioContext;if(AC)actx=new AC();}catch(e){}}
- if(actx&&actx.state!=='running')actx.resume().catch(()=>{});
- if(!unlocked){unlocked=true;try{if(!player.src||player.ended||player.paused&&!player.currentSrc){player.src=SILENT;const p=player.play();if(p)p.catch(()=>{});}}catch(e){}}
-}
-document.addEventListener('pointerdown',unlockAudio,{capture:true});
-document.addEventListener('touchend',unlockAudio,{capture:true,passive:true});
-const ttsCache=new Map();
-function ttsInstructions(){
- const pace={slow:'Speak slowly and very clearly, with small pauses between phrases, like a patient teacher talking to a beginner.',normal:'Speak a bit slower than normal conversation, clearly enunciated.',natural:'Speak at a natural, relaxed conversational pace.'}[S.speed]||'';
- return 'Voice: a warm, friendly native Filipino speaker from Manila who is a patient language tutor. Language: the text is mostly Filipino (Tagalog). Pronounce it with authentic Tagalog pronunciation — pure vowels, lightly tapped r, natural Filipino stress and intonation — never with an American accent. English words should sound the way a Filipino says them in Taglish; English-only sentences can be read in clear Filipino-accented English. '+pace+' Tone: encouraging, cheerful, kind.';
-}
-async function ttsUrl(text){
- const key=S.voice+'|'+S.speed+'|'+text;if(ttsCache.has(key))return ttsCache.get(key);
- const body=v=>JSON.stringify({model:TTS_MODEL,voice:v,input:text.slice(0,3500),instructions:ttsInstructions(),response_format:'mp3'});
- let res;try{res=await api('/audio/speech',{method:'POST',headers:{'Content-Type':'application/json'},body:body(S.voice)});}
- catch(e){if(S.voice!=='coral'&&(e.kind==='other'||e.kind==='model')){res=await api('/audio/speech',{method:'POST',headers:{'Content-Type':'application/json'},body:body('coral')});}else throw e;}
- const url=URL.createObjectURL(await res.blob());ttsCache.set(key,url);return url;
-}
-let playToken=0;
-function stopPlayback(){playToken++;try{player.pause();}catch(e){}if(window.__onPlayEnd){const f=window.__onPlayEnd;window.__onPlayEnd=null;f('stopped');}}
-function playUrl(url){return new Promise(resolve=>{stopPlayback();const my=++playToken;
- const done=r=>{if(window.__onPlayEnd===fin)window.__onPlayEnd=null;player.onended=player.onerror=null;resolve(r);};const fin=r=>done(r);window.__onPlayEnd=fin;
- player.onended=()=>{if(my===playToken)done('ended');};player.onerror=()=>{if(my===playToken)done('error');};
- player.src=url;player.playbackRate=S.speed==='slow'?0.92:1;player.preservesPitch=true;player.webkitPreservesPitch=true;
- const p=player.play();if(p)p.catch(err=>{if(my===playToken){toast('Tap 🔊 to play the tutor’s voice (iPhone blocked autoplay).',3500);done('blocked');}});});}
-async function speak(text,{silentErrors}={}){
- if(!text)return 'empty';
- try{const url=await ttsUrl(text);return await playUrl(url);}catch(e){if(!silentErrors)showError(e);return 'error';}
-}
-
-/* ---------- mic / recording ---------- */
-let interruptGen=0,stream=null,rec=null,chunks=[],recStart=0,vadTimer=null,meterRaf=0,analyser=null,srcNode=null,heardSpeech=false,pendingStop=false,starting=false,cancelRec=false;
-function pickMime(){if(!window.MediaRecorder)return '';const c=['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg'];for(const m of c){try{if(MediaRecorder.isTypeSupported(m))return m;}catch(e){}}return '';}
-function extFor(m){return /mp4|m4a|aac/.test(m)?'mp4':/webm/.test(m)?'webm':/ogg/.test(m)?'ogg':'mp4';}
-function releaseMic(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}try{srcNode&&srcNode.disconnect();}catch(e){}srcNode=null;analyser=null;cancelAnimationFrame(meterRaf);clearInterval(vadTimer);$('#ring').style.transform='';
- try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch(e){}}
-async function startRecording(){
- if(starting||state==='recording')return;
- if(!S.key){openSettings();return;}
- if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){showError(new AppError('This browser can’t record audio. On iPhone, use Safari (iOS 14.3 or newer) and open the app from the Home Screen or in Safari.','mic'));return;}
- interruptGen++;stopPlayback();starting=true;pendingStop=false;cancelRec=false;heardSpeech=false;
- try{try{if(navigator.audioSession)navigator.audioSession.type='play-and-record';}catch(e){}
-  stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
- }catch(e){starting=false;releaseMic();setState('idle');
-  const n=e&&e.name;
-  if(n==='NotAllowedError'||n==='SecurityError')showError(new AppError('Microphone permission is blocked. On iPhone: Settings → Apps → Safari → Microphone → Allow (or tap “aA” in Safari’s address bar → Website Settings → Microphone → Allow). Then try again.','mic'));
-  else if(n==='NotFoundError')showError(new AppError('No microphone found.','mic'));
-  else showError(new AppError('Couldn’t start the microphone ('+(e&&e.message||n||'unknown')+'). Close other apps using the mic and try again.','mic'));
-  return;}
- const mime=pickMime();chunks=[];
- try{rec=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);}catch(e){try{rec=new MediaRecorder(stream);}catch(e2){starting=false;releaseMic();setState('idle');showError(new AppError('Recording isn’t supported here: '+e2.message,'mic'));return;}}
- rec.ondataavailable=ev=>{if(ev.data&&ev.data.size)chunks.push(ev.data);};
- rec.onstop=onRecStop;
- rec.start(250);recStart=Date.now();starting=false;setState('recording');
- setupMeter();
- if(pendingStop){pendingStop=false;stopRecording();}
-}
-function setupMeter(){
- try{if(!actx){const AC=window.AudioContext||window.webkitAudioContext;actx=new AC();}if(actx.state!=='running')actx.resume().catch(()=>{});
-  srcNode=actx.createMediaStreamSource(stream);analyser=actx.createAnalyser();analyser.fftSize=1024;srcNode.connect(analyser);}catch(e){analyser=null;}
- const buf=new Uint8Array(1024);let floor=0.01,silentMs=0,last=Date.now(),warm=0;
- const lvl=()=>{if(!analyser)return 0;analyser.getByteTimeDomainData(buf);let s=0;for(let i=0;i<buf.length;i++){const v=(buf[i]-128)/128;s+=v*v;}return Math.sqrt(s/buf.length);};
- const ring=$('#ring');
- const draw=()=>{if(state!=='recording')return;const l=lvl();ring.style.transform='scale('+(1+Math.min(l*6,0.35))+')';meterRaf=requestAnimationFrame(draw);};draw();
- clearInterval(vadTimer);
- vadTimer=setInterval(()=>{if(state!=='recording'){clearInterval(vadTimer);return;}
-  const now=Date.now(),dt=now-last;last=now;const l=lvl();const el=now-recStart;
-  if(el<300){floor=Math.max(0.004,(floor*warm+l)/(++warm));return;}
-  const thr=Math.max(0.025,floor*3.2);
-  if(l>thr){heardSpeech=true;silentMs=0;}else{silentMs+=dt;if(!heardSpeech)floor=floor*0.98+l*0.02;}
-  if(el>60000){stopRecording();return;}
-  if(!S.handsFree||!analyser)return;
-  if(heardSpeech&&silentMs>1300){stopRecording();return;}
-  if(!heardSpeech&&el>9000){cancelRec=true;stopRecording();S.handsFree&&setTimeout(()=>{setState('idle','Hands-free paused — tap the mic when you’re ready');},50);}
- },60);
-}
-function stopRecording(){if(starting){pendingStop=true;return;}if(rec&&rec.state!=='inactive'){try{rec.stop();}catch(e){onRecStop();}}}
-function onRecStop(){
- const dur=Date.now()-recStart;const type=(rec&&rec.mimeType)||pickMime()||'audio/mp4';
- const blob=new Blob(chunks,{type});chunks=[];rec=null;releaseMic();
- if(cancelRec){cancelRec=false;if(state==='recording')setState('idle');return;}
- if(dur<600||blob.size<1200){setState('idle');toast('That was too short — tap the mic, talk, then tap again.');return;}
- if(window.__testHook)window.__testHook('recorded',{type,size:blob.size,dur});
- handleAudio(blob,type);
-}
-// tap OR hold: a quick tap toggles recording; holding >450ms then releasing sends.
-let downAt=0,downWhileRec=false;
-mic.addEventListener('pointerdown',e=>{e.preventDefault();unlockAudio();
- if(state==='transcribing'||state==='thinking'){toast('One sec — the tutor is still working.');return;}
- downAt=Date.now();
- if(state==='recording'){downWhileRec=true;cancelRec=false;stopRecording();return;}
- downWhileRec=false;startRecording();});
-mic.addEventListener('pointerup',e=>{e.preventDefault();if(downWhileRec){downWhileRec=false;return;}
- if(downAt&&Date.now()-downAt>450&&(state==='recording'||starting)){stopRecording();}downAt=0;});
-mic.addEventListener('pointercancel',()=>{downAt=0;});
-mic.addEventListener('contextmenu',e=>e.preventDefault());
-
-/* ---------- conversation pipeline ---------- */
-async function transcribe(blob,type){
- const fd=new FormData();fd.append('file',blob,'speech.'+extFor(type));fd.append('model',S.sttModel);
- fd.append('prompt','An American English speaker practicing Filipino (Tagalog). Speech may be Filipino, English, or Taglish (mixed). Transcribe exactly what is said, keeping Tagalog words in standard Filipino spelling, e.g. "Kumusta po kayo? Okay lang ako, salamat."');
- fd.append('response_format','json');
- const res=await api('/audio/transcriptions',{method:'POST',body:fd});const j=await res.json();return (j.text||'').trim();
-}
-function systemPrompt(){
- const t=topicById(convo.topic);const beg=S.level!=='intermediate';
- return `You are "Mara", a warm, funny, patient Filipino (Tagalog) conversation tutor. You are having a SPOKEN conversation (voice in, voice out) with Neal, an adult American English speaker from Ohio who works as a real estate agent and is learning Filipino.${S.about?`\nAbout Neal (from him): ${S.about}`:''}
-
-LEVEL: ${beg?'BEGINNER. Use short, simple, high-frequency everyday Filipino. reply_tl must be 1–2 short sentences (max ~16 words total). Use common words real Filipinos say, including normal Taglish loanwords (okay, traffic, work) when natural. Prefer present/common verb forms. Always give English help.':'INTERMEDIATE. reply_tl can be 2–3 natural sentences with varied grammar (aspects of verbs, ng/nang, particles na/pa/din/lang/kasi). Speak like real conversational Manila Filipino, natural Taglish allowed. Keep English help brief.'}
-
-TOPIC: ${t.brief}
-
-EVERY TURN:
-1. Check what Neal just said. Text comes from speech recognition, so ignore punctuation, capitalization and minor spelling. If he made a real Filipino mistake (wrong word, word order, verb form, missing/misused ng/sa/ang/na/po, unnatural phrasing) or he said something in English, set "correction": you_said = his words, better = the natural Filipino way to say what he meant, why = one short, kind English explanation (max ~20 words). If he spoke English, "better" is how to say it in Filipino and why can be "Here’s how to say that in Filipino." If his Filipino was fine, correction = null and you may praise briefly in reply_tl (e.g., "Galing!").
-2. Respond naturally in Filipino to keep the conversation going, usually ending with ONE simple question so he keeps talking. Stay in role if the topic is a role-play. Teach respect words (po/opo) when talking to elders or strangers.
-3. If he asks in English how to say something or what something means, answer it: put the Filipino phrase in reply_tl (e.g., "Ang 'thank you' ay salamat po."), explain in reply_en, and invite him to try saying it.
-4. If his message is "(start)", greet him and open the topic.
-5. Give 2 short suggested replies he could say next (at his level), and 0–3 useful new words from your reply.
-
-reply_tl is read aloud by text-to-speech: no emojis, no brackets, no romanized pronunciation guides, no English translation inside it.
-
-Respond with ONLY a JSON object, exactly this shape:
-{"correction": null or {"you_said": "...", "better": "...", "why": "..."},
- "reply_tl": "Filipino reply",
- "reply_en": "English translation of reply_tl",
- "new_words": [{"tl": "...", "en": "..."}],
- "suggestions": [{"tl": "...", "en": "..."}, {"tl": "...", "en": "..."}]}`;
-}
-async function chatReply(){
- const msgs=[{role:'system',content:systemPrompt()},...convo.history.slice(-MAX_MSGS)];
- const res=await api('/chat/completions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:S.chatModel,messages:msgs,temperature:0.7,max_tokens:600,response_format:{type:'json_object'}})});
- const j=await res.json();const raw=(j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||'';
- let r;try{r=JSON.parse(raw);}catch(e){const m=raw.match(/\{[\s\S]*\}/);try{r=m?JSON.parse(m[0]):null;}catch(e2){r=null;}}
- if(!r||!r.reply_tl){r={correction:null,reply_tl:String(raw||'Pasensya na, ulitin mo nga?').replace(/[{}"]/g,'').slice(0,400),reply_en:'',new_words:[],suggestions:[]};}
- r.new_words=Array.isArray(r.new_words)?r.new_words.filter(w=>w&&w.tl).slice(0,3):[];
- r.suggestions=Array.isArray(r.suggestions)?r.suggestions.filter(w=>w&&w.tl).slice(0,3):[];
- if(r.correction&&!r.correction.better)r.correction=null;
- return r;
-}
-function persist(){convo.history=convo.history.slice(-MAX_MSGS);convo.items=convo.items.slice(-80);save('ut.convo',convo);}
-let lastFailed=null,errEl=null;
-function clearErr(){if(errEl){errEl.remove();errEl=null;}}
-function showError(e){clearErr();const msg=e&&e.message?e.message:String(e);
- const kids=[h('div',null,msg)];const btns=h('div');
- if(e&&e.kind==='key'){btns.append(h('button',{onclick:()=>{clearErr();openSettings();}},'Open Settings'));}
- if(lastFailed&&e&&e.kind!=='mic'&&e.kind!=='key'){const f=lastFailed;btns.append(h('button',{onclick:()=>{clearErr();f();}},'Try again'));}
- if(btns.childNodes.length)kids.push(btns);
- errEl=h('div',{class:'err',role:'alert'},...kids);chat.append(errEl);scrollDown();
- if(window.__testHook)window.__testHook('error',msg);
-}
-async function handleAudio(blob,type){
- clearErr();setState('transcribing');
- lastFailed=()=>handleAudio(blob,type);
- let text;try{text=await transcribe(blob,type);}catch(e){setState('idle');showError(e);return;}
- if(!text||/^[\s.。…!?]*$/.test(text)){setState('idle');toast('I didn’t catch that — try again a little closer to the mic.');if(S.handsFree)autoListen();return;}
- const item={who:'me',text};convo.items.push(item);const node=renderItem(item);scrollDown();
- convo.history.push({role:'user',content:text});persist();
- await tutorTurn(item,node);
-}
-async function tutorTurn(meItem,meNode){
- clearErr();setState('thinking');const typing=h('div',{class:'msg tutor'},h('div',{class:'bubble typing'},h('i'),h('i'),h('i')));chat.append(typing);scrollDown();
- lastFailed=()=>tutorTurn(meItem,meNode);
- let r;try{r=await chatReply();}catch(e){typing.remove();setState('idle');showError(e);return;}
- typing.remove();lastFailed=null;
- convo.history.push({role:'assistant',content:JSON.stringify({correction:r.correction,reply_tl:r.reply_tl,reply_en:r.reply_en})});
- if(meItem){meItem.correction=r.correction||null;if(meNode){const fresh=renderItem(meItem,true);meNode.replaceWith(fresh);}}
- const item={who:'tutor',r};convo.items.push(item);renderItem(item);renderSugs(r.suggestions);persist();scrollDown();
- const parts=[];
- if(S.speakFix&&r.correction&&r.correction.better)parts.push((S.level==='intermediate'?'Mas natural: ':'Mas tama: ')+r.correction.better);
- parts.push(r.reply_tl);
- if(S.sayEn&&r.reply_en)parts.push(r.reply_en);
- setState('speaking','Tutor is getting ready to speak…');
- // fetch all clips in parallel, play in order (reply audio is then cached for Replay)
- const urlsP=parts.map(t=>ttsUrl(t));urlsP.forEach(u=>u.catch(()=>{}));
- let how='ended';const gen=interruptGen;
- for(let i=0;i<parts.length;i++){
-  let url;try{url=await urlsP[i];}catch(e){setState('idle');lastFailed=()=>{setState('speaking');speak(r.reply_tl).then(()=>{setState('idle');});};showError(e);return;}
-  if(gen!==interruptGen||state!=='speaking')return; // user interrupted while loading
-  setState('speaking');
-  if(window.__testHook)window.__testHook('tts-start',parts[i]);
-  how=await playUrl(url);
-  if(how!=='ended')break;
-  if(i<parts.length-1)await new Promise(res=>setTimeout(res,250));
- }
- if(window.__testHook)window.__testHook('tts-'+how,parts.join(' | '));
- if(state==='speaking')setState('idle');
- if(how==='ended'&&S.handsFree)autoListen();
-}
-function autoListen(){if(!S.handsFree||document.hidden)return;setTimeout(()=>{if(state==='idle'&&S.handsFree&&!document.querySelector('.sheet.open'))startRecording();},350);}
-
-/* ---------- rendering ---------- */
-function isSaved(tl){return phrases.some(p=>p.tl===tl);}
-function toggleSave(tl,en,btn){
- if(isSaved(tl)){phrases=phrases.filter(p=>p.tl!==tl);toast('Removed from Phrases');}
- else{phrases.unshift({tl,en:en||'',at:Date.now()});toast('⭐ Saved to Phrases I learned');}
- save('ut.phrases',phrases);if(btn)setSaveBtn(btn,isSaved(tl));
-}
-function setSaveBtn(btn,on){btn.classList.toggle('saved',on);btn.innerHTML='';btn.append(svg(on?'starFull':'star'),on?'Saved':'Save');}
-function playBtn(text,label){return h('button',{class:'act','aria-label':'Play audio',onclick:async e=>{e.stopPropagation();unlockAudio();const b=e.currentTarget;b.disabled=true;await speak(text);b.disabled=false;}},svg('speaker'),label||'');}
-function renderItem(it,returnOnly){
- let node;const wel=chat.querySelector('.welcome');if(wel&&!returnOnly)wel.remove();
- if(it.who==='me'){
-  node=h('div',{class:'msg me'},h('div',{class:'bubble'},it.text));
-  const c=it.correction;
-  if(c&&c.better){const sb=h('button',{class:'act',onclick:e=>{e.stopPropagation();toggleSave(c.better,c.why,sb);}});setSaveBtn(sb,isSaved(c.better));
-   node.append(h('div',{class:'fix'},h('div',{class:'lbl'},'✏️ Better way to say it'),h('div',{class:'better'},c.better),c.why?h('div',{class:'why'},c.why):null,h('div',{class:'actions'},playBtn(c.better,'Hear it'),sb)));}
- }else if(it.who==='tutor'){
-  const r=it.r;const en=h('div',{class:'en'+(S.showEn?'':' hidden')},r.reply_en||'');
-  const reveal=S.showEn||!r.reply_en?null:h('button',{class:'reveal',onclick:e=>{e.stopPropagation();en.classList.toggle('hidden');}},'Show English');
-  const sb=h('button',{class:'act'});sb.addEventListener('click',e=>{e.stopPropagation();toggleSave(r.reply_tl,r.reply_en,sb);});setSaveBtn(sb,isSaved(r.reply_tl));
-  const words=r.new_words&&r.new_words.length?h('div',{class:'words'},r.new_words.map(w=>h('button',{class:'word',onclick:e=>{e.stopPropagation();unlockAudio();speak(w.tl);}},h('b',null,w.tl),' · '+(w.en||'')))):null;
-  const bubble=h('div',{class:'bubble'},h('div',{class:'tl'},r.reply_tl),en,reveal,words,h('div',{class:'actions'},playBtn(r.reply_tl,'Replay'),sb));
-  bubble.addEventListener('click',()=>{if(!S.showEn)en.classList.toggle('hidden');});
-  node=h('div',{class:'msg tutor'},bubble);
- }else node=h('div',{class:'sys'},it.text);
- if(!returnOnly)chat.append(node);
- return node;
-}
-function renderSugs(list){const box=$('#sugs');box.innerHTML='';const has=list&&list.length;$('#sugLabel').hidden=!has;if(!has)return;
- for(const s of list){box.append(h('button',{class:'sug',onclick:()=>{unlockAudio();speak(s.tl);}},h('div',{class:'s1'},svg('speaker'),s.tl),s.en?h('div',{class:'s2'},s.en):null));}}
-function renderWelcome(){
- const t=topicById(convo.topic);
- const w=h('div',{class:'welcome'},h('h2',null,'Kumusta, Neal! 👋'),
-  h('p',null,'Tap the big red mic and say anything — in Filipino, English, or Taglish. Tap again when you’re done (or just hold it while you talk). Mara answers out loud and gently fixes your Filipino.'),
-  h('p',null,'Not sure what to say? Let her start:'),
-  h('div',{class:'chips'},h('button',{class:'chip primary',onclick:()=>startTopic(convo.topic)},'▶ Start: '+t.name),
-   ...TOPICS.filter(x=>x.id!==t.id).slice(0,4).map(x=>h('button',{class:'chip',onclick:()=>startTopic(x.id)},x.em+' '+x.name)),
-   h('button',{class:'chip',onclick:()=>openTopics()},'More topics…')));
- chat.append(w);
-}
-function renderAll(){chat.innerHTML='';errEl=null;$('#topicName').textContent=topicById(convo.topic).name;
- if(!convo.items.length){renderWelcome();renderSugs([]);}
- else{convo.items.forEach(it=>renderItem(it));const lastT=[...convo.items].reverse().find(i=>i.who==='tutor');renderSugs(lastT?lastT.r.suggestions:[]);}
- scrollDown();}
-function resetConvo(topic){stopPlayback();if(state==='recording'){cancelRec=true;stopRecording();}convo={topic:topic||convo.topic||'free',history:[],items:[]};persist();renderAll();setState('idle');}
-async function startTopic(id){unlockAudio();if(!S.key){openSettings();return;}closeSheets();resetConvo(id);
- const t=topicById(id);chat.innerHTML='';convo.items.push({who:'sys',text:t.em+' '+t.name});renderItem(convo.items[0]);
- convo.history.push({role:'user',content:'(start)'});persist();await tutorTurn(null,null);}
-
-/* ---------- typing ---------- */
-$('#kbBtn').addEventListener('click',()=>{const r=$('#typeRow');r.classList.toggle('open');if(r.classList.contains('open'))$('#typeIn').focus();});
-async function sendTyped(){const v=$('#typeIn').value.trim();if(!v)return;if(!S.key){openSettings();return;}if(state!=='idle'&&state!=='speaking')return;unlockAudio();stopPlayback();$('#typeIn').value='';$('#typeIn').blur();
- const item={who:'me',text:v};convo.items.push(item);const node=renderItem(item);convo.history.push({role:'user',content:v});persist();scrollDown();await tutorTurn(item,node);}
-$('#typeSend').addEventListener('click',sendTyped);
-$('#typeIn').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();sendTyped();}});
-
-/* ---------- hands-free ---------- */
-function syncHF(){const b=$('#hfBtn');b.classList.toggle('on',S.handsFree);b.setAttribute('aria-pressed',S.handsFree);$('#hfLbl').textContent=S.handsFree?'Hands-free on':'Hands-free';}
-$('#hfBtn').addEventListener('click',()=>{unlockAudio();S.handsFree=!S.handsFree;saveS();syncHF();
- if(S.handsFree){toast('Hands-free on: after Mara talks, just answer. I send when you pause.',3500);if(state==='idle')startRecording();}
- else{toast('Hands-free off: tap the mic to talk.');if(state==='recording'){cancelRec=true;stopRecording();setState('idle');}else setState(state);}});
-
-/* ---------- topics sheet ---------- */
-function openTopics(){const list=$('#topicList');list.innerHTML='';
- TOPICS.forEach(t=>list.append(h('button',{class:'topic'+(t.id===convo.topic?' on':''),onclick:()=>startTopic(t.id)},h('div',{class:'em'},t.em),h('div',null,h('b',null,t.name),h('small',null,t.desc)))));
- openSheet('#topicSheet');}
-$('#topicBtn').addEventListener('click',openTopics);
-
-/* ---------- phrases sheet ---------- */
-function openPhrases(){const box=$('#phraseList');box.innerHTML='';
- if(!phrases.length)box.append(h('div',{class:'empty'},h('div',{style:'font-size:40px'},'⭐'),h('p',null,'No saved phrases yet.'),h('p',null,'Tap “Save” under any tutor line or correction to keep it here and replay it later.')));
- else phrases.forEach((p,i)=>box.append(h('div',{class:'phrase'},h('div',{class:'txt'},h('b',null,p.tl),p.en?h('span',null,p.en):null),
-  h('button',{class:'round','aria-label':'Play',onclick:async e=>{unlockAudio();const b=e.currentTarget;b.disabled=true;await speak(p.tl);b.disabled=false;}},svg('speaker')),
-  h('button',{class:'round','aria-label':'Delete',onclick:()=>{phrases.splice(i,1);save('ut.phrases',phrases);openPhrases();renderAll();}},svg('trash')))));
- openSheet('#phraseSheet');}
-$('#phrasesBtn').addEventListener('click',openPhrases);
-
-/* ---------- settings sheet ---------- */
-const VOICES=[['coral','Coral — warm female (default)'],['marin','Marin — natural female'],['cedar','Cedar — natural male'],['nova','Nova — bright female'],['shimmer','Shimmer — soft female'],['sage','Sage — calm female'],['ash','Ash — friendly male'],['verse','Verse — expressive male'],['ballad','Ballad — gentle male'],['alloy','Alloy — neutral']];
-$('#voiceSel').append(...VOICES.map(([v,l])=>h('option',{value:v},l)));
-function segInit(id,key){const seg=$(id);const sync=()=>seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===S[key]));
- seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{S[key]=b.dataset.v;saveS();sync();}));sync();}
-function togInit(id,key,after){const t=$(id);const sync=()=>{t.classList.toggle('on',!!S[key]);t.setAttribute('aria-checked',!!S[key]);};
- t.addEventListener('click',()=>{S[key]=!S[key];saveS();sync();after&&after();});sync();}
-segInit('#levelSeg','level');segInit('#speedSeg','speed');
-togInit('#tEn','showEn',()=>renderAll());togInit('#tFix','speakFix');togInit('#tSayEn','sayEn');
-function openSettings(){$('#keyIn').value=S.key;$('#welcomeCard').hidden=!!S.key;$('#voiceSel').value=S.voice;$('#chatSel').value=S.chatModel;$('#sttSel').value=S.sttModel;$('#aboutIn').value=S.about;
- $('#keyState').textContent=S.key?'Key saved on this phone ✓':'';$('#keyState').className='keystate'+(S.key?' good':'');openSheet('#settingsSheet');}
-$('#settingsBtn').addEventListener('click',openSettings);
-$('#keyShow').addEventListener('click',()=>{const i=$('#keyIn');i.type=i.type==='password'?'text':'password';$('#keyShow').textContent=i.type==='password'?'Show':'Hide';});
-$('#keySave').addEventListener('click',async()=>{unlockAudio();const k=$('#keyIn').value.trim().replace(/^Bearer\s+/i,'');const st=$('#keyState');
- if(!k){S.key='';saveS();st.textContent='Key removed.';st.className='keystate';return;}
- if(!/^sk-/.test(k)){st.textContent='That doesn’t look like an OpenAI key (it should start with “sk-”).';st.className='keystate bad';return;}
- S.key=k;saveS();st.textContent='Testing key…';st.className='keystate';
- try{await api('/models/'+encodeURIComponent(S.chatModel),{method:'GET'});st.textContent='✅ Key works! Close this screen and tap the mic.';st.className='keystate good';$('#welcomeCard').hidden=true;}
- catch(e){st.textContent=(e.kind==='network'?'Saved, but couldn’t test it: ':'')+e.message;st.className='keystate bad';if(e.kind==='key'){S.key='';saveS();}}
-});
-$('#voiceSel').addEventListener('change',e=>{S.voice=e.target.value;saveS();});
-$('#chatSel').addEventListener('change',e=>{S.chatModel=e.target.value;saveS();});
-$('#sttSel').addEventListener('change',e=>{S.sttModel=e.target.value;saveS();});
-$('#aboutIn').addEventListener('input',e=>{S.about=e.target.value.slice(0,600);saveS();});
-$('#voiceTest').addEventListener('click',async()=>{unlockAudio();if(!S.key){toast('Add your API key first.');return;}const b=$('#voiceTest');b.disabled=true;b.textContent='…';await speak('Kumusta, Neal! Ako si Mara. Handa ka na bang mag-usap tayo sa Filipino?');b.disabled=false;b.textContent='▶ Test';});
-$('#resetBtn').addEventListener('click',()=>{if(confirm('Clear this conversation and start fresh? (Saved phrases are kept.)')){resetConvo();closeSheets();toast('New conversation started');}});
-
-/* ---------- lifecycle ---------- */
-document.addEventListener('visibilitychange',()=>{if(document.hidden){if(state==='recording'){cancelRec=true;stopRecording();}stopPlayback();if(state==='speaking')setState('idle');}});
-window.addEventListener('online',()=>toast('Back online ✓'));
-window.addEventListener('offline',()=>toast('You’re offline — the tutor needs internet.',3500));
-syncHF();renderAll();setState('idle');
-if(!S.key)openSettings();
-if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}
-</script>
+<script>window.BUILD='202610081303';</script>
+<script src="lessons.js?v=202610081303"></script>
+<script src="app.js?v=202610081303"></script>
 </body>
 </html>
